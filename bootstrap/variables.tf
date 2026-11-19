@@ -21,3 +21,11 @@ variable "github_repo" {
   type        = string
   default     = "census-data-pipeline"
 }
+variable "github_owner_id" {
+  type = string
+  default = "268648133"
+}
+variable "github_repo_id" {
+  type = string
+  default = "1462952614"
+}
