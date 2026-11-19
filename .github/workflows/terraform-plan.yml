@@ -1,0 +1,49 @@
+name: terraform-plan
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "infra/**"
+      - ".github/workflows/terraform-plan.yml"
+
+permissions:
+  id-token: "write"
+  contents: "read"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/envs/dev   
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7 
+                                 
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v4 
+        with:
+          terraform_version: 1.13.3 
+
+      - name: Log into AWS (OIDC)
+        uses: aws-actions/configure-aws-credentials@v6 
+        with:
+          role-to-assume: ${{ vars.AWS_PLAN_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Terraform fmt
+        run: terraform fmt -check -diff
+             
+
+      - name: Terraform init
+        run: terraform init -input=false
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Terraform plan
+        run: terraform plan -input=false -no-color
+             
