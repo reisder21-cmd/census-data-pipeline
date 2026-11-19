@@ -9,3 +9,15 @@ variable "aws_profile" {
   type        = string
   default     = "census-admin"
 }
+
+variable "github_owner" {
+  description = "github user"
+  type        = string
+  default     = "reisder21-cmd"
+}
+
+variable "github_repo" {
+  description = "repo name"
+  type        = string
+  default     = "census-data-pipeline"
+}
