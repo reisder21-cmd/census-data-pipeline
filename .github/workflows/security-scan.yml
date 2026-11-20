@@ -1,0 +1,22 @@
+name: security-scan
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+        - "infra/**"
+        - "bootstrap/**"
+        - ".github/workflows/security-scan.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  checkov:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7 
+
+      - name: Run checkov
+        run: pipx run --spec checkov==3.4.6 checkov -d . --framework terraform --compact
