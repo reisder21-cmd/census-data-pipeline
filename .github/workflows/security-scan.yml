@@ -3,10 +3,10 @@ name: security-scan
 on:
   pull_request:
     branches: [main]
-    paths:
-        - "infra/**"
-        - "bootstrap/**"
-        - ".github/workflows/security-scan.yml"
+    # paths:
+    #     - "infra/**"
+    #     - "bootstrap/**"
+    #     - ".github/workflows/security-scan.yml"
 
 permissions:
   contents: read
